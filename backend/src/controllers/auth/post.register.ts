@@ -30,7 +30,7 @@ export const verifyUserHandler = async (req: Request<VerifyUserInput>, res: Resp
     const verificationCode = req.params.verificationCode
 
     // Find the user by _id
-    const user = findUserById(id)
+    const user = await findUserById(id)
     console.log(user)
     if (!user) {
         return res.send(`Could Not Verify User`)
