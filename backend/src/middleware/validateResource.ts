@@ -14,7 +14,7 @@ const validateResource = (schema: AnyZodObject) => (req: Request, res: Response,
         console.log('Validate Resource')
     } catch (e: any) {
         console.log(req.body)
-        log.info('validate resource error', e)
+        console.log(e)
         return res.status(StatusCodes.BAD_REQUEST).send(e)
     }
 }
