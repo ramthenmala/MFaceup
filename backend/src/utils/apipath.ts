@@ -8,5 +8,6 @@ const apiPathPrefix = `${apiPrefix}/${apiVersion}` // /api/v1/
 export const API_END_POINTS = {
     REGISTER: `/${apiPathPrefix}/auth/register`,
     LOGIN: `/${apiPathPrefix}/auth/login`,
-    HEALTH_CHECK: `/${apiPathPrefix}/healthcheck`
+    VERIFY_USER: `/${apiPathPrefix}/auth/verify/:id/:verificationCode`,
+    HEALTH_CHECK: `/${apiPathPrefix}/health-check`
 }

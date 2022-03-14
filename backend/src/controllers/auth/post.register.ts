@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { StatusCodes } from "http-status-codes"
-import { CreateUserInput } from "../../schema/user.schema"
-import { createUser } from "../../service/user.service"
+import { CreateUserInput, VerifyUserInput } from "../../schema/user.schema"
+import { createUser, findUserById } from "../../service/user.service"
 import { sendEmail } from "../../utils/mailer"
 
 export const createUserHandler = async (req: Request<{}, {}, CreateUserInput>, res: Response) => {
@@ -23,4 +23,30 @@ export const createUserHandler = async (req: Request<{}, {}, CreateUserInput>, r
         }
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e)
     }
+}
+
+export const verifyUserHandler = async (req: Request<VerifyUserInput>, res: Response) => {
+    const id = req.params.id
+    const verificationCode = req.params.verificationCode
+
+    // Find the user by _id
+    const user = findUserById(id)
+    console.log(user)
+    if (!user) {
+        return res.send(`Could Not Verify User`)
+    }
+
+    // Check to see if the verificationCode matches
+    if (user.verified) {
+        return res.send(`User is already Verified`)
+    }
+
+    // Check the user is verified
+    if (user.verificationCode === verificationCode) {
+        user.verified = true
+        await user.save()
+        return res.send(`User Successfully Verified`)
+    }
+
+    return res.send(`Could Not Verify User`)
 }
