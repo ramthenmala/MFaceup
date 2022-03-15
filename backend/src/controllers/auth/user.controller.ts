@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { StatusCodes } from "http-status-codes"
-import { CreateUserInput, ForgotPasswordInput, VerifyUserInput } from "../../schema/user.schema"
+import { CreateUserInput, ForgotPasswordInput, ResetPasswordInput, VerifyUserInput } from "../../schema/user.schema"
 import { createUser, findUserByEmail, findUserById } from "../../service/user.service"
 import { sendEmail } from "../../utils/mailer"
 import log from "../../utils/logger"
@@ -25,6 +25,10 @@ export const createUserHandler = async (req: Request<{}, {}, CreateUserInput>, r
         }
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e)
     }
+}
+
+export const loginUserHandler = async (req: Request, res: Response) => {
+    res.send(`LOGIN API WORKING`)
 }
 
 export const verifyUserHandler = async (req: Request<VerifyUserInput>, res: Response) => {
@@ -75,14 +79,24 @@ export const forgotPasswordHandler = async (req: Request<{}, {}, ForgotPasswordI
     await sendEmail({
         to: user.email,
         from: 'test@example.com',
-        subject: 'reset your password',
-        text: `Password reset code ${passwordResetCode} d: ${user._id}`
+        subject: 'Reset your password',
+        text: `Password reset code ${passwordResetCode} ID: ${user._id}`
     })
     log.debug(`Password reset email send to ${user._id} email : ${email}`)
-
     return res.send(message)
 }
 
-export const resetPasswordHandler = async () => {
+export const resetPasswordHandler = async (req: Request<ResetPasswordInput['params'], {}, ResetPasswordInput['body']>, res: Response) => {
+    const { id, passwordResetCode } = req.params;
+    const { password } = req.body
+    const user = await findUserById(id)
 
+    if (!user || !user.passwordResetCode || user.passwordResetCode !== passwordResetCode) {
+        return res.status(StatusCodes.BAD_REQUEST).send(`Could not reset user Password`)
+    }
+
+    user.passwordResetCode = null;
+    user.password = password;
+    await user.save()
+    return res.send('Successfully updated password')
 }

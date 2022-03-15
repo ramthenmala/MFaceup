@@ -56,4 +56,4 @@ export const resetPasswordSchema = object({
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"]
 export type VerifyUserInput = TypeOf<typeof verifyUserSchema>["params"]
 export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>["body"]
-export type ResetPasswordSchema = TypeOf<typeof resetPasswordSchema>
+export type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>

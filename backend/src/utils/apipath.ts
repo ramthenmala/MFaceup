@@ -10,5 +10,7 @@ export const API_END_POINTS = {
     LOGIN: `/${apiPathPrefix}/auth/login`,
     VERIFY_USER: `/${apiPathPrefix}/auth/verify/:id/:verificationCode`,
     FORGOT_PASSWORD: `/${apiPathPrefix}/auth/forgot-password`,
+    RESET_PASSWORD: `/${apiPathPrefix}/users/resetpassword/:id/:passwordResetCode`,
+    SESSION: `/${apiPathPrefix}/session`,
     HEALTH_CHECK: `/${apiPathPrefix}/health-check`
 }

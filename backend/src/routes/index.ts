@@ -1,9 +1,8 @@
 import express from 'express';
-import authRouter from './auth.routes';
-import { API_END_POINTS } from '../utils/apipath';
+import userRoutes from './user.routes';
 
 const coreRouter = express.Router();
 
-coreRouter.use(authRouter)
+coreRouter.use(userRoutes)
 
 export default coreRouter;

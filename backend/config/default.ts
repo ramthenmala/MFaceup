@@ -1,9 +1,11 @@
 export default {
     port: 5002,
-    mongodbUri: 'mongodb+srv://ramthenmala:ramtml953@cluster0.ia6qn.mongodb.net/chatapp?retryWrites=true&w=majority',
+    mongodbUri: 'mongodb+srv://rammongodbvideochat:aS8BlfFm6iyma5qu@cluster0.ia6qn.mongodb.net/mfaceupmeet?retryWrites=true&w=majority',
     logLevel: 'info',
     apiVersion: 'v1',
     apiPrefix: 'api',
+    accessTokenPrivateKey: '',
+    refreshTokenPrivateKey: '',
     smtp: {
         user: 'bclpv27tuixccdmg@ethereal.email',
         pass: 'JDQdrQYtVf3NUf8Hx5',
