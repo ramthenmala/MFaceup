@@ -100,3 +100,8 @@ export const resetPasswordHandler = async (req: Request<ResetPasswordInput['para
     await user.save()
     return res.send('Successfully updated password')
 }
+
+
+export const getCurrentUserHandler = async (req: Request, res: Response) => {
+    res.send(res.locals.user)
+}
